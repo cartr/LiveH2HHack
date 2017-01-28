@@ -6,12 +6,46 @@ const say  = require('say');
 var API_TOKEN = process.env.SLACKBOT_API_TOKEN || null;
 var bot = new slackbot(API_TOKEN);
 
+var currentChannel = null;
 
 bot.use(function(message, cb) {
-  if ('message' == message.type) {
-      console.log(message)
-      say.speak(message.text);
-  }
+    if ('message' == message.type) {
+        console.log(message)
+        if (message.text.indexOf("!LiveH2H ") === 0) {
+            currentChannel = message.channel;
+            const meetingID = message.text.slice(9).replace(/-/g, "");
+            const requestOptions = {
+                url: 'https://sandbox.liveh2h.com/tutormeetweb/rest/v1/meetings/join',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: {
+                    "meetingId": meetingID,
+                    "name": "Slackbot"
+                },
+                json: true
+            };
+            request.post(requestOptions, function(error, response, body) {
+                console.log("Got response")
+                if (!error && response.statusCode == 200) {
+                    bot.sendMessage(currentChannel, "Successfully joined meeting!");
+                    Page.navigate({
+                        url: body.data.meetingURL
+                    }).then(() => {
+                        Page.addScriptToEvaluateOnLoad({
+                            scriptSource: "$('#islivetranscriptenabled').trigger('click');"
+                        });
+                    });
+                } else {
+                    console.log(error);
+                    console.log(response);
+                    console.log(body);
+                }
+          })
+      } else if (message.channel == currentChannel) {
+          say.speak(message.text);
+      }
+    }
   cb();
 });
 
@@ -26,7 +60,7 @@ CDP((client) => {
         if (params.response.payloadData.indexOf("subTitlesFileCreated") !== -1) {
           var data = JSON.parse(params.response.payloadData);
           if (data["id"] == "subTitlesFileCreated") {
-              bot.sendMessage("C3YFR6CNS", data["speaker"] + ": " + data["text"]);
+              bot.sendMessage(currentChannel, data["speaker"] + ": " + data["text"]);
               console.log(data)
           }
         };
