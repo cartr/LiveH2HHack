@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "chrome-remote-interface": "^0.17.1",
+    "lodash": "^4.17.4",
     "node-slackbot": "0.0.6",
     "request": "^2.79.0",
     "say": "^0.11.0"

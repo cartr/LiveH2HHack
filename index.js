@@ -57,6 +57,9 @@ bot.use(function(message, cb) {
                 }
           })
       } else if (message.channel == currentChannel) {
+          if (message.text === "") {
+              message.text = message.attachments[0].pretext.split("<")[0] + message.attachments[0].pretext.split("|")[1].split(">")[0]
+          }
           if (!(message.user in userStack)) {
               userStack[message.user] = VOICES.pop();
           }
@@ -78,7 +81,7 @@ CDP((client) => {
         if (params.response.payloadData.indexOf("subTitlesFileCreated") !== -1) {
           var data = JSON.parse(params.response.payloadData);
           if (data["id"] == "subTitlesFileCreated") {
-              bot.sendMessage(currentChannel, data["speaker"] + ": " + data["text"]);
+              bot.sendMessage(currentChannel, "*" + data["speaker"] + "*: " + data["text"].replace(/\*/g, "\\*"));
               console.log(data)
           }
         };
