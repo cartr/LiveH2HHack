@@ -22,12 +22,19 @@ var VOICES = _.shuffle([
 ]);
 var userStack = {};
 
+var triggerWord = "<USER_ID_NOT_RETRIEVED_YET> ";
+
+bot.api("auth.test", {}, function(data) {
+    triggerWord = "<@"+data.user_id+"> ";
+    console.log(data);
+});
+
 bot.use(function(message, cb) {
     if ('message' == message.type) {
         console.log(message)
-        if (message.text.indexOf("!LiveH2H ") === 0) {
+        if (message.text.indexOf(triggerWord) === 0) {
             currentChannel = message.channel;
-            const meetingID = message.text.slice(9).replace(/-/g, "");
+            const meetingID = message.text.slice(triggerWord.length).replace(/-/g, "");
             const requestOptions = {
                 url: 'https://sandbox.liveh2h.com/tutormeetweb/rest/v1/meetings/join',
                 headers: {
