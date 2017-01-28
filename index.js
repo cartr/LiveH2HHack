@@ -1,6 +1,7 @@
-var slackbot = require('node-slackbot');
+const slackbot = require('node-slackbot');
 const request = require('request');
 const CDP = require('chrome-remote-interface');
+const say  = require('say');
 
 var API_TOKEN = process.env.SLACKBOT_API_TOKEN || null;
 var bot = new slackbot(API_TOKEN);
@@ -8,7 +9,8 @@ var bot = new slackbot(API_TOKEN);
 
 bot.use(function(message, cb) {
   if ('message' == message.type) {
-      console.log(message);
+      console.log(message)
+      say.speak(message.text);
   }
   cb();
 });
