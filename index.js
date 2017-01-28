@@ -81,7 +81,7 @@ CDP((client) => {
         if (params.response.payloadData.indexOf("subTitlesFileCreated") !== -1) {
           var data = JSON.parse(params.response.payloadData);
           if (data["id"] == "subTitlesFileCreated") {
-              bot.sendMessage(currentChannel, data["speaker"] + ": " + data["text"]);
+              bot.sendMessage(currentChannel, "*" + data["speaker"] + "*: " + data["text"].replace(/\*/g, "\\*"));
               console.log(data)
           }
         };
