@@ -1,7 +1,9 @@
 var slackbot = require('node-slackbot');
 const request = require('request');
 const CDP = require('chrome-remote-interface');
-var bot = new slackbot('KEY-GOES-HERE')
+
+var API_TOKEN = process.env.SLACKBOT_API_TOKEN || null;
+var bot = new slackbot(API_TOKEN);
 
 
 bot.use(function(message, cb) {
