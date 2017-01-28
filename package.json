@@ -1,0 +1,15 @@
+{
+  "name": "liveh2hslackbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "node-slackbot": "0.0.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sang Han <jjangsangy@gmail.com> (http://sanghan.me/)",
+  "license": "Apache-2.0"
+}
