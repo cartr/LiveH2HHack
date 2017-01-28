@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "node-slackbot": "0.0.6",
     "chrome-remote-interface": "^0.17.1",
-    "request": "^2.79.0"
+    "node-slackbot": "0.0.6",
+    "request": "^2.79.0",
+    "say": "^0.11.0"
   },
   "devDependencies": {},
   "scripts": {
