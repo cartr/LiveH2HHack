@@ -2,11 +2,25 @@ const slackbot = require('node-slackbot');
 const request = require('request');
 const CDP = require('chrome-remote-interface');
 const say  = require('say');
+const _ = require('lodash');
 
 var API_TOKEN = process.env.SLACKBOT_API_TOKEN || null;
 var bot = new slackbot(API_TOKEN);
 
 var currentChannel = null;
+
+var VOICES = _.shuffle([
+    'Agnes',
+    'Princess',
+    'Vicki',
+    'Victoria',
+    'Alex',
+    'Bruce',
+    'Fred',
+    'Junior',
+    'Ralph'
+]);
+var userStack = {};
 
 bot.use(function(message, cb) {
     if ('message' == message.type) {
@@ -43,7 +57,11 @@ bot.use(function(message, cb) {
                 }
           })
       } else if (message.channel == currentChannel) {
-          say.speak(message.text);
+          if (!(message.user in userStack)) {
+              userStack[message.user] = VOICES.pop();
+          }
+          console.log(VOICES, userStack, message.user);
+          say.speak(message.text, userStack[message.user]);
       }
     }
   cb();
