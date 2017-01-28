@@ -14,5 +14,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Sang Han <jjangsangy@gmail.com> (http://sanghan.me/)",
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "scripts": {
+      "start": "node index.js"
+  }
 }
