@@ -57,6 +57,9 @@ bot.use(function(message, cb) {
                 }
           })
       } else if (message.channel == currentChannel) {
+          if (message.text === "") {
+              message.text = message.attachments[0].pretext.split("<")[0] + message.attachments[0].pretext.split("|")[1].split(">")[0]
+          }
           if (!(message.user in userStack)) {
               userStack[message.user] = VOICES.pop();
           }
