@@ -33,7 +33,7 @@ You'll also need to set up loopback audio, so the audio output of the `npm` comm
 $ npm start
 ```
 
-Once your server has started setup initialize your slackbot into your liveh2h session by using `!LiveH2H H2H Session`
+Once your server has started setup initialize your slackbot into your liveh2h session by using `@LiveH2H H2H Session`
 
 ![Session](./img/session.png)
 
